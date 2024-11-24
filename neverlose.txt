@@ -599,24 +599,12 @@ function Neverlose_Main:Window(config)
         Neverlose_Main.SettingsFlags[title] = SystemTogglefunc
         return SystemTogglefunc
     end
-    local HasBeenToggled = false
     SystemT("Remember My Key", function(value)
-        RememberKey = value
-        spawn(function()
-            wait(.1)
-            HasBeenToggled = true
-        end)
+    RememberKey = value
+    pcall(function()
+        EditSettingsCFG("KeyNeverlose", "Key Holder", value)
     end)
-
-    spawn(function()
-        while wait() do
-            if RememberKey == false and HasBeenToggled == false then
-                pcall(function()
-                    EditSettingsCFG("KeyNeverlose", "Key Holder", "")
-                end)
-            end
-        end
-    end)
+end)
 
     local PlayerSetup = SystemT("Allow Player Data", function(value)
         PlayerData = value
